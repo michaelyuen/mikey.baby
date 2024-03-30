@@ -1,7 +1,4 @@
 ---
-import "../styles/global.css";
-import Footer from "../components/Footer.astro";
-import Header from "../components/Header.astro";
 import Layout from "../layouts/Layout.astro";
 
 const pageTitle = "About Me";
@@ -32,7 +29,6 @@ const textCase = "uppercase";
   }
 </style>
 <Layout title={`${pageTitle} | Michael Yuen's website`}>
-  <Header />
   <main>
     <h1>{pageTitle}</h1>
     <h2>... and my new Astro site!</h2>
@@ -79,8 +75,4 @@ const textCase = "uppercase";
       )
     }
   </main>
-  <Footer />
-  <script>
-    import "../scripts/menu.js";
-  </script>
 </Layout>
