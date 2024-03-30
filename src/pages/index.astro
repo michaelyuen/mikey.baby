@@ -1,14 +1,11 @@
 ---
 import "../styles/global.css";
+import Navigation from "../components/Navigation.astro";
 import Layout from "../layouts/Layout.astro";
-
-const pageTitle = "Home";
 ---
 
 <Layout title="Michael Yuen's website">
-  <a href="/">{pageTitle}</a>
-  <a href="/about/">About</a>
-  <a href="/blog/">Blog</a>
+  <Navigation />
   <main>
     <h1>Hi, I'm Michael Yuen and welcome to my website</h1>
   </main>
