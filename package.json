@@ -1,0 +1,18 @@
+{
+  "name": "mikey.baby",
+  "type": "module",
+  "version": "0.0.1",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^4.5.9",
+    "@astrojs/check": "^0.5.10",
+    "typescript": "^5.4.3"
+  }
+}
