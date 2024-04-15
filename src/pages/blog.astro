@@ -1,5 +1,7 @@
 ---
+import BlogPost from "../components/BlogPost.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+const allPosts = await Astro.glob("../pages/posts/*.md");
 ---
 
 <BaseLayout title="Blog | Michael Yuen's website">
@@ -7,14 +9,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <h1>My Astro Learning Blog</h1>
     <p>This is where I will post about my journey learning Astro.</p>
     <ul>
-      <li><a href="/posts/post-1">Post 1</a></li>
-      <li><a href="/posts/post-2">Post 2</a></li>
-      <li><a href="/posts/post-3">Post 3</a></li>
-      <li>
-        <a href="/posts/what-does-a-website-actually-need"
-          >What does a website actually need?</a
-        >
-      </li>
+      {
+        allPosts.map((post) => (
+          <BlogPost url={post.url} title={post.frontmatter.title} />
+        ))
+      }
     </ul>
   </main>
 </BaseLayout>
