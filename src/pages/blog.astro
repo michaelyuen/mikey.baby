@@ -1,8 +1,8 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<Layout title="Blog | Michael Yuen's website">
+<BaseLayout title="Blog | Michael Yuen's website">
   <main>
     <h1>My Astro Learning Blog</h1>
     <p>This is where I will post about my journey learning Astro.</p>
@@ -12,8 +12,9 @@ import Layout from "../layouts/Layout.astro";
       <li><a href="/posts/post-3">Post 3</a></li>
       <li>
         <a href="/posts/what-does-a-website-actually-need"
-          >What does a website actually need?</a>
+          >What does a website actually need?</a
+        >
       </li>
     </ul>
   </main>
-</Layout>
+</BaseLayout>

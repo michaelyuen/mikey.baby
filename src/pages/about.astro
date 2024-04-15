@@ -1,5 +1,5 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 const pageTitle = "About Me";
 const identity = {
@@ -28,7 +28,7 @@ const textCase = "uppercase";
     text-transform: var(--textCase);
   }
 </style>
-<Layout title={`${pageTitle} | Michael Yuen's website`}>
+<BaseLayout title={`${pageTitle} | Michael Yuen's website`}>
   <main>
     <h1>{pageTitle}</h1>
     <h2>... and my new Astro site!</h2>
@@ -75,4 +75,4 @@ const textCase = "uppercase";
       )
     }
   </main>
-</Layout>
+</BaseLayout>
