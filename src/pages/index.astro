@@ -1,12 +1,11 @@
 ---
+import Greeting from "../components/Greeting";
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="Michael Yuen's website">
   <main>
     <h1>Hi, I'm Michael Yuen and welcome to my website</h1>
+    <Greeting client:load messages={["Hi", "Hello", "Howdy", "Hey there"]} />
   </main>
-  <a href="/what-does-a-website-actually-need"
-    >What does a website actually need?</a
-  >
 </BaseLayout>
