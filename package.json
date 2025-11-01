@@ -3,6 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "license": "GPL-3.0-or-later",
+  "packageManager": "pnpm@10.20.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
