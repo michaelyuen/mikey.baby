@@ -18,22 +18,22 @@ importers:
         specifier: 4.0.13
         version: 4.0.13
       '@types/react':
-        specifier: ^18.2.78
+        specifier: ^18.3.26
         version: 18.3.26
       '@types/react-dom':
-        specifier: ^18.2.25
+        specifier: ^18.3.7
         version: 18.3.7(@types/react@18.3.26)
       astro:
         specifier: ^5.15.3
         version: 5.15.3(@types/node@24.9.2)(rollup@4.52.5)(typescript@5.9.3)(yaml@2.8.1)
       react:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       typescript:
-        specifier: ^5.4.3
+        specifier: ^5.9.3
         version: 5.9.3
 
 packages:
