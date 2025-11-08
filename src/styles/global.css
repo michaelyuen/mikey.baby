@@ -3,7 +3,7 @@
 }
 
 html {
-  background-color: #f1f5f9;
+  background-color: #fff;
   font-family: sans-serif;
 }
 
@@ -22,12 +22,13 @@ html.dark {
   }
 }
 
-.dark .nav-links a {
+.dark a {
   color: #fff;
 }
 
 body {
   font-family: var(--font-merriweather), serif;
+  font-size: 18px;
   margin: 0;
   line-height: 1.75;
 }

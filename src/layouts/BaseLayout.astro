@@ -6,10 +6,11 @@ import ThemeIcon from "../components/ThemeIcon.astro";
 import "../styles/global.css";
 
 interface Props {
+  isFullWidth?: boolean;
   title: string;
 }
 
-const { title } = Astro.props;
+const { isFullWidth, title } = Astro.props;
 ---
 
 <!doctype html>
@@ -33,7 +34,28 @@ const { title } = Astro.props;
   <body>
     <ThemeIcon />
     <Header />
-    <slot />
-    <Footer />
+    <main class={isFullWidth ? "full-width" : ""}>
+      <slot />
+    </main>
+    <!-- <Footer /> -->
   </body>
 </html>
+
+<style>
+  main {
+    padding: 32px;
+    margin: 0 auto;
+    max-width: 768px;
+    -webkit-overflow-scrolling: touch;
+
+    &.full-width {
+      max-width: 1440px;
+    }
+
+    h1 span {
+      font-family: var(--font-pacifico), serif;
+      display: inline-block;
+      padding-right: 5px;
+    }
+  }
+</style>

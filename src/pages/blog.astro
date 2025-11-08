@@ -8,15 +8,13 @@ const allPosts: MarkdownInstance<Record<string, any>>[] = Object.values(
 ---
 
 <BaseLayout title="Blog | Michael Yuen's website">
-  <main>
-    <h1>My Astro Learning Blog</h1>
-    <p>This is where I will post about my journey learning Astro.</p>
-    <ul>
-      {
-        allPosts.map((post) => (
-          <BlogPost url={post.url} title={post.frontmatter.title} />
-        ))
-      }
-    </ul>
-  </main>
+  <h1><span>my</span>Blog</h1>
+  <p>This is where I will post about my journey learning Astro.</p>
+  <ul>
+    {
+      allPosts.map((post) => (
+        <BlogPost url={post.url} title={post.frontmatter.title} />
+      ))
+    }
+  </ul>
 </BaseLayout>
