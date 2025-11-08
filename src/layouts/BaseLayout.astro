@@ -1,6 +1,8 @@
 ---
+import { Font } from "astro:assets";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import ThemeIcon from "../components/ThemeIcon.astro";
 import "../styles/global.css";
 
 interface Props {
@@ -23,13 +25,15 @@ const { title } = Astro.props;
 
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <Font cssVariable="--font-gaegu" preload />
+    <Font cssVariable="--font-merriweather" preload />
+    <Font cssVariable="--font-open-sans" preload />
+    <Font cssVariable="--font-pacifico" preload />
   </head>
   <body>
+    <ThemeIcon />
     <Header />
     <slot />
     <Footer />
-    <script>
-      import "../scripts/menu.js";
-    </script>
   </body>
 </html>
