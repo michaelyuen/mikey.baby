@@ -31,15 +31,12 @@ const { isFullWidth, title } = Astro.props;
     <Font cssVariable="--font-open-sans" preload />
     <Font cssVariable="--font-pacifico" preload />
   </head>
-  <body>
+  <body
+    class="prose bg-white dark:bg-black dark:prose-invert prose-headings:underline prose-h1:text-xl prose-h1:font-bold prose-p:text-justify prose-a:text-blue-600 prose-img:rounded-xl"
+  >
     <ThemeIcon />
     <Header />
-    <main
-      class="prose dark:prose-invert
-  prose-h1:font-bold prose-h1:text-xl
-  prose-a:text-blue-600 prose-p:text-justify prose-img:rounded-xl
-  prose-headings:underline"
-    >
+    <main>
       <slot />
     </main>
     <!-- <Footer /> -->

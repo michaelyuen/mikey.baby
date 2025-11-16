@@ -1,22 +1,24 @@
 @import "tailwindcss";
-@plugin '@tailwindcss/typography';
+@plugin "@tailwindcss/typography";
 
-* {
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* * {
   box-sizing: border-box;
-}
+} */
 
 html {
-  background-color: #fff;
+  /* background-color: #fff; */
   font-family: sans-serif;
 }
 
-html,
+/* html,
 body {
   height: 100%;
   min-height: 100%;
-}
+} */
 
-html.dark {
+/* html.dark {
   background-color: #0d0950;
   color: #fff;
 
@@ -27,7 +29,7 @@ html.dark {
 
 .dark a {
   color: #fff;
-}
+} */
 
 body {
   font-family: var(--font-merriweather), serif;

@@ -28,10 +28,10 @@ export default defineConfig({
         name: "Pacifico",
         cssVariable: "--font-pacifico",
         provider: fontProviders.google(),
-      }
-    ]
+      },
+    ],
   },
   vite: {
-    plugins: [tailwindcss()]
-  }
+    plugins: [tailwindcss()],
+  },
 });
