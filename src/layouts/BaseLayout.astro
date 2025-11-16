@@ -34,7 +34,12 @@ const { isFullWidth, title } = Astro.props;
   <body>
     <ThemeIcon />
     <Header />
-    <main class={isFullWidth ? "full-width" : ""}>
+    <main
+      class="prose dark:prose-invert
+  prose-h1:font-bold prose-h1:text-xl
+  prose-a:text-blue-600 prose-p:text-justify prose-img:rounded-xl
+  prose-headings:underline"
+    >
       <slot />
     </main>
     <!-- <Footer /> -->
@@ -47,10 +52,6 @@ const { isFullWidth, title } = Astro.props;
     margin: 0 auto;
     max-width: 768px;
     -webkit-overflow-scrolling: touch;
-
-    &.full-width {
-      max-width: 1440px;
-    }
 
     h1 span {
       font-family: var(--font-pacifico), serif;
