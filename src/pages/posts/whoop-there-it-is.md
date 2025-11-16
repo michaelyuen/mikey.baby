@@ -7,6 +7,7 @@ image:
   url: "https://docs.astro.build/assets/rays.webp"
   alt: "Thumbnail of Astro rays."
 pubDate: 2025-11-13
+lastUpdated: 2025-11-15
 tags: ["whoop", "health"]
 ---
 
@@ -63,3 +64,12 @@ Again, used the bathroom and by the time I was finished the notification was the
 ### Reflection
 
 _It's really interesting how using the WHOOP has already caused a shift in my mindset towards "gamifying" my biometrics. For example, I've checked my resting heart rate numerous times and have been more actively thinking about my breathing because I want to keep it low. A little silly, but an interesting observation nonetheless! I've also weighed myself and tracked my calories through another app (MyNetDiary) and seen how they automatically get integrated into WHOOP (through Apple Health I think). The question is, will I sustain this? I don't know, but for day 2 it is fun so far._
+
+## Day 3
+
+### Morning
+Today I ran on the treadmill in the morning and used the activity feature again. I'm realizing that I don't exactly know the best way to use it, but I'm learning as I go. I say this because I asked the little AI chatbot how to track a run on a treadmill and it told me to select the type of activity before starting it -- so I realized yesterday I should have chosen weightlifting. Anyway, I was interested to try it specifically with running since I knew it would track which "heart rate zone" I was in via a Live Activity. I enjoyed this a lot. I ran 3 miles while frequently checking which zone I was in. For the most part, I aimed to stay in zone 2 and 3, but twice I sped up to hit zone 4 and 5 briefly before slowing down again. In the past, there was a time when I ran more frequently to the point I used a heart rate monitor and tried to use this as a guide for training. This is definitely a motivator for me to run more frequently again, and I'm even curious to try other workouts while cross-referencing with the heart rate monitor.
+
+### Afternoon
+
+I left to meet my girlfriend Surbhi in Manhattan after her workout. Later on, upon checking the app I noticed it automatically detected and tracked an activity as "Commuting". Interesting!
