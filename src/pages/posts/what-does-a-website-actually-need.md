@@ -10,4 +10,4 @@ pubDate: 2024-03-30
 tags: ["introspecting", "learning in public", "website"]
 ---
 
-# What does a website actually need?
+## 🤷

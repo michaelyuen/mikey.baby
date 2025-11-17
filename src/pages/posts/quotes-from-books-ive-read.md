@@ -11,8 +11,6 @@ lastUpdated: 2025-11-16
 tags: ["quotes", "books", "reading"]
 ---
 
-# Quotes from books I've read
-
 ## Do Androids Dream of Electric Sheep?
 
 > In connection with this a weapon of war, the Synthetic Freedom Fighter, had been modified; able to function on an alien world, the humanoid robot -- strictly speaking, the organic android -- had become the **mobile donkey engine** of the colonization program

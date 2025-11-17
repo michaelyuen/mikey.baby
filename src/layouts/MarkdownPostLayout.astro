@@ -8,40 +8,23 @@ const { frontmatter } = Astro.props;
   <p>{frontmatter.pubDate.toString().slice(0, 10)}</p>
   <p><em>{frontmatter.description}</em></p>
   <p>Written by: {frontmatter.author}</p>
-  <img src={frontmatter.image.url} width="300" alt={frontmatter.image.alt} />
+  <!-- <img src={frontmatter.image.url} width="300" alt={frontmatter.image.alt} /> -->
+  <slot />
 
-  <ul class="tags">
+  <hr />
+  <h4>Tags</h4>
+  <ul class="flex flex-wrap p-0">
     {
       frontmatter.tags.map((tag: string) => (
-        <li class="tag">
-          <a href={`/tags/${tag}`}>{tag}</a>
+        <li class="m-0 list-none p-0">
+          <a
+            class="dark:bg-gray-80 m-1 rounded-lg border border-solid border-gray-300 bg-gray-100 p-0 px-2 py-1 text-gray-600! no-underline hover:border-blue-800 hover:bg-blue-100 hover:text-blue-800! dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300! hover:dark:border-blue-400 hover:dark:bg-blue-900 hover:dark:text-blue-300!"
+            href={`/tags/${tag}`}
+          >
+            {tag}
+          </a>
         </li>
       ))
     }
   </ul>
-
-  <slot />
 </BaseLayout>
-
-<style>
-  a {
-    color: #00539f;
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0;
-    padding: 0;
-  }
-
-  .tag {
-    list-style: none;
-    margin: 0.25em;
-    border: dotted 1px #a1a1a1;
-    border-radius: 0.5em;
-    padding: 0.5em 1em;
-    font-size: 1.15em;
-    background-color: #f8fcfd;
-  }
-</style>
