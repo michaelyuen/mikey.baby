@@ -1,36 +1,15 @@
-* {
-  box-sizing: border-box;
-}
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
-html {
-  background-color: #fff;
-  font-family: sans-serif;
-}
+@custom-variant dark (&:where(.dark, .dark *));
 
-html,
-body {
-  height: 100%;
-  min-height: 100%;
-}
-
-html.dark {
-  background-color: #0d0950;
-  color: #fff;
-
-  header {
-    background-color: #0d0950;
-  }
-}
-
-.dark a {
-  color: #fff;
-}
-
-body {
-  font-family: var(--font-merriweather), serif;
-  font-size: 18px;
-  margin: 0;
-  line-height: 1.75;
+@theme inline {
+  --default-font-family: var(--font-merriweather), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-sans: var(--font-open-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: var(--font-merriweather), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-tw-pacifico: var(--font-pacifico), serif;
+  --font-tw-gaegu: var(--font-gaegu), serif;
 }
 
 h1,
@@ -39,20 +18,20 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-open-sans), sans-serif;
-  font-weight: bold;
-  margin-top: 0;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-h1 {
-  font-size: 32px;
+main h1 span {
+  font-family: var(--font-tw-pacifico), serif;
+  display: inline-block;
+  padding-right: var(--spacing);;
 }
 
-a {
-  color: #00f;
-  text-decoration: none;
+/* TODO: need this? */
+main {
+  -webkit-overflow-scrolling: touch;
+}
 
-  &:hover {
-    text-decoration: underline;
-  }
+code {
+  font-family: var(--font-mono);
 }

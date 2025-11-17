@@ -11,14 +11,11 @@ lastUpdated: 2025-11-15
 tags: ["whoop", "health"]
 ---
 
-# WHOOP there it is!
-
 I decided to try the "[WHOOP](https://www.whoop.com)", which is a device that tracks biometrics. This post will document my journey and experience.
 
 ## Background
+
 Recently I found myself wanting to change my habits. This is a cycle I've found myself going through every so often throughout my life, undulating between lack-of-structure and discipline. This time, I haven't been living poorly or with bad habits, so rather than "correct" myself I simply want to do better. My daily routine leaves me with little time to pursue interests or hobbies; I basically just go through the motions. And that's okay, but it's not enough.
-
-
 
 ## Day 1
 
@@ -39,6 +36,7 @@ Basically, the page has a dial with your current stress score for the day, and b
 Today was a workout day, so I was interested to see how this might be incorporated into WHOOP. Basically, I opened the WHOOP app and selected "Start Activity", not really knowing what it is or how it worked. Then I opened the Strong app I use for tracking workouts and got to work. Right away, I noticed a live activity for WHOOP on my phone's home screen. It kind of appeared like it was intended to track a run because there were little sections for distance and pace. But most promitent were the heart rate monitor and a little slider for the heart rate zones (1 through 5) that would move in coordination with my heart rate.
 
 I didn't know what to make of it, but I figured it may become more clear later. Experimenting is part of the fun, so I just let it run. My workout consisted of:
+
 - Back Squats
   - 80lbs x 10
   - 100lbs x 10
@@ -68,8 +66,19 @@ _It's really interesting how using the WHOOP has already caused a shift in my mi
 ## Day 3
 
 ### Morning
+
 Today I ran on the treadmill in the morning and used the activity feature again. I'm realizing that I don't exactly know the best way to use it, but I'm learning as I go. I say this because I asked the little AI chatbot how to track a run on a treadmill and it told me to select the type of activity before starting it -- so I realized yesterday I should have chosen weightlifting. Anyway, I was interested to try it specifically with running since I knew it would track which "heart rate zone" I was in via a Live Activity. I enjoyed this a lot. I ran 3 miles while frequently checking which zone I was in. For the most part, I aimed to stay in zone 2 and 3, but twice I sped up to hit zone 4 and 5 briefly before slowing down again. In the past, there was a time when I ran more frequently to the point I used a heart rate monitor and tried to use this as a guide for training. This is definitely a motivator for me to run more frequently again, and I'm even curious to try other workouts while cross-referencing with the heart rate monitor.
 
 ### Afternoon
 
 I left to meet my girlfriend Surbhi in Manhattan after her workout. Later on, upon checking the app I noticed it automatically detected and tracked an activity as "Commuting". Interesting!
+
+## Day 4
+
+Today I unlocked the "personalized Recovery Score". Exciting! While it's still going to take time to adjust and learn from, I'd say this is one of the main selling points I was interested in. Coincidentally, I expected that today's data should reflect a greater need for recovery due to what I did yesterday and it seems to reflect exactly that.
+
+Yesterday I ran on the treadmill in the morning, as I mentioned. I wasn't exactly sure how this would impact the data. It's not something I do commonly enough that I'd expect no impact, but I also didn't feel it acutely. However, later in the day we went to one of Surbhi's favorite bars [schmuck.](https://resy.com/cities/new-york-ny/venues/schmuck-nyc) and had several cocktails. I definitely expected that to have an impact. That's a no brainer, but I was curious to see how it would be represented by WHOOP. My sleep performance was rated as 80% compared to my previous three nights being 86%, 83%, and 91%. Another difference is that I have the app set so I'll get better sleep on Saturdays and Sundays, so despite that my sleep was still evidently worse, with less recovery.
+
+Additionally, as I unlocked the Recovery Score today, it paints a pretty clear picture there too. My recover was rated as 42% compared to my previous three days being 57%, 58%, and 75%. Outlier measurements can be seen for Heart Rate Variability, Resting Heart Rate, and Respitory Rate too.
+
+What does this mean? I think WHOOP is adding data insights to what is generally accepted and pretty intuitive -- if you exercise and drink, you'll have worse recovery the following day. I think alcohol is much more of a negative factor. More broadly, I only have four days worth of data so while this is fun to consider, I'll need to accumulate more over time to the point where I can use higher-level trends as directional guidance for my training and lifestyle choices.

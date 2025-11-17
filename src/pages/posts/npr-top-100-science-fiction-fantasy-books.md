@@ -11,8 +11,6 @@ lastUpdated: 2025-11-15
 tags: ["quotes", "books", "reading", "lists", "top-100"]
 ---
 
-# NPR's Top 100 Science Fiction & Fantasy Books
-
 14 / 100 read
 
 https://www.npr.org/2011/08/11/139085843/your-picks-top-100-science-fiction-fantasy-books

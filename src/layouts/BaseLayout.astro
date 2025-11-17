@@ -1,16 +1,22 @@
 ---
+import type { MarkdownLayoutProps } from "astro";
 import { Font } from "astro:assets";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import ThemeIcon from "../components/ThemeIcon.astro";
 import "../styles/global.css";
 
-interface Props {
+interface Props
+  extends Partial<
+    MarkdownLayoutProps<{
+      title: string;
+    }>
+  > {
   isFullWidth?: boolean;
   title: string;
 }
 
-const { isFullWidth, title } = Astro.props;
+const { frontmatter, isFullWidth, title } = Astro.props;
 ---
 
 <!doctype html>
@@ -25,37 +31,20 @@ const { isFullWidth, title } = Astro.props;
     />
 
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <title>{title ?? frontmatter?.title}</title>
     <Font cssVariable="--font-gaegu" preload />
     <Font cssVariable="--font-merriweather" preload />
     <Font cssVariable="--font-open-sans" preload />
     <Font cssVariable="--font-pacifico" preload />
   </head>
-  <body>
+  <body class="bg-white dark:bg-black">
     <ThemeIcon />
     <Header />
-    <main class={isFullWidth ? "full-width" : ""}>
+    <main
+      class="mx-auto prose prose-lg p-8 dark:prose-invert prose-headings:text-4xl prose-a:text-blue-600"
+    >
       <slot />
     </main>
     <!-- <Footer /> -->
   </body>
 </html>
-
-<style>
-  main {
-    padding: 32px;
-    margin: 0 auto;
-    max-width: 768px;
-    -webkit-overflow-scrolling: touch;
-
-    &.full-width {
-      max-width: 1440px;
-    }
-
-    h1 span {
-      font-family: var(--font-pacifico), serif;
-      display: inline-block;
-      padding-right: 5px;
-    }
-  }
-</style>
