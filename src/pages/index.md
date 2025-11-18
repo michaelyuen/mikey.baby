@@ -5,7 +5,9 @@ title: Michael Yuen's website
 
 # <span>my</span>Bio
 
-👋🏻 I'm Michael but some people call me `my`. I love to create order.
+👽👋🏻 Greetings, earthling! _(my Dad would always say this)_
+
+My name is Michael but some people call me `my`. I love to create order.
 
 I am a ~🤖 robot~, ~👽 alien~, 👨🏻‍🌾 human bean, and I live in 📍NYC.
 

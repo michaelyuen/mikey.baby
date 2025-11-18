@@ -7,7 +7,7 @@ image:
   url: "https://docs.astro.build/assets/rays.webp"
   alt: "Thumbnail of Astro rays."
 pubDate: 2025-11-13
-lastUpdated: 2025-11-15
+lastUpdated: 2025-11-18
 tags: ["whoop", "health"]
 ---
 
@@ -82,3 +82,15 @@ Yesterday I ran on the treadmill in the morning, as I mentioned. I wasn't exactl
 Additionally, as I unlocked the Recovery Score today, it paints a pretty clear picture there too. My recover was rated as 42% compared to my previous three days being 57%, 58%, and 75%. Outlier measurements can be seen for Heart Rate Variability, Resting Heart Rate, and Respitory Rate too.
 
 What does this mean? I think WHOOP is adding data insights to what is generally accepted and pretty intuitive -- if you exercise and drink, you'll have worse recovery the following day. I think alcohol is much more of a negative factor. More broadly, I only have four days worth of data so while this is fun to consider, I'll need to accumulate more over time to the point where I can use higher-level trends as directional guidance for my training and lifestyle choices.
+
+## Day 6
+
+Good morning! The time is 8:06am ET. A little later than the past five days. I feel a little bad about that, but I just need to do better today and keep being consistent.
+
+But first, it's good to mention positive events! Yesterday I woke up fairly early. Or on time? Heh. I remember I was kind of shambling around like "ok what do I do". Anyway, I ended up running on the treadmill! It was only ~1 mile from like ~7:40 - 8, but that was great!
+
+Then, I had a busy day at work. Every other Monday is like this, because I've scheduled all of my team's one-on-ones that day. It's good for knocking them out, but it does take a lot out of me and means that I won't have much time for anything else. Beyond that, there are other thing cropping up with the project I'm working on as well as annual reviews. All in all, I felt pretty overwhelmed.
+
+Anyway, this led to me choosing to work in the evening. After walking the dogs and having dinner, I sat down and did so. It ended up taking me until past 11 and I remember getting into bed at about 11:50pm. I figured this would have an impact on the sleep report I'd get the following morning and sure enough it did!
+
+To my surprise, the data didn't show anything for "High Sleep Stress" or like patterns of wakefulness. I remember having a little difficulty getting to sleep because my mind was still active, but otherwise I slept great throughout the night and didn't even need to get up to use the bathroom. I only remember waking up one time to guzzle some water. Beyond that, I did get a worse rating for overall sleep performance, with worse overall sleep time and sleep consistency. My REM was below the threshold considered to be typical. All that is to say, I guess it tracks.
