@@ -5,12 +5,12 @@ title: Michael Yuen's website
 
 # <span>my</span>Bio
 
-👽👋🏻 Greetings, earthling! _(my Dad would always say this)_
+👽👋🏻 Greetings, earthling! <small>_(my Dad would always say this)_</small>
 
-My name is Michael but some people call me `my`. I love to create order.
+My name is Michael but some people call me `my`.
 
-I am a ~🤖 robot~, ~👽 alien~, 👨🏻‍🌾 human bean, and I live in 📍NYC.
+I'm an ordinary guy living my best life with my girlfriend and our dogs Astro and Olive. We currently live in 📍Brooklyn.
 
-I'm also a software engineer and I love building <a href="https://en.wikipedia.org/wiki/Graphical_user_interface" target="_blank" rel="noreferrer">GUIs</a>. Currently, I work at MLB on <a href="https://www.mlb.com" rel="noreferrer" target="_blank">mlb.com</a>. I recently had the amazing opportunity to lead the frontend development effort of the Cheer at the Ballpark project (💀 rip). Previously, I worked at Resy on <a href="https://www.resy.com" rel="noreferrer" target="_blank">resy.com</a>.
+Professionally, I'm a software engineer with a passion for user interfaces and user experiences. 
 
- Another hobby I would like take up is writing, so naturally there must be a blog! That's a big part of the motivation behind rebuilding this website, aside from it already being long overdue. To enable myself to efficiently <a href="https://www.swyx.io/writing/learn-in-public" target="_blank" rel="noopener noreferrer">learn in public</a> and share what I enjoy.
+Currently, I work as an Engineering Manager at Major League Baseball. My team and I work across <a href="https://www.mlb.com" rel="noreferrer" target="_blank">mlb.com</a> and <a href="https://www.milb.com" rel="noreferrer" target="_blank">milb.com</a>. Previously, I worked at Resy on <a href="https://www.resy.com" rel="noreferrer" target="_blank">resy.com</a>.

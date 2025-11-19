@@ -94,3 +94,9 @@ Then, I had a busy day at work. Every other Monday is like this, because I've sc
 Anyway, this led to me choosing to work in the evening. After walking the dogs and having dinner, I sat down and did so. It ended up taking me until past 11 and I remember getting into bed at about 11:50pm. I figured this would have an impact on the sleep report I'd get the following morning and sure enough it did!
 
 To my surprise, the data didn't show anything for "High Sleep Stress" or like patterns of wakefulness. I remember having a little difficulty getting to sleep because my mind was still active, but otherwise I slept great throughout the night and didn't even need to get up to use the bathroom. I only remember waking up one time to guzzle some water. Beyond that, I did get a worse rating for overall sleep performance, with worse overall sleep time and sleep consistency. My REM was below the threshold considered to be typical. All that is to say, I guess it tracks.
+
+## Day 7
+
+One week. Woo-hoo! At this point I completed the first major milestones, "7 logged sleeps", and today unlocked the Health Monitor. I thought it would be a little more exciting. 🤷‍♂️
+
+Yesterday I worked out. It was a decent session. I feel some fatigue this morning and my right shoulder is a little more painful than usual when I move my arm in certain ways. Seems about right. I went to sleep at a good time (~11) and woke up a little after 7:30, but I didn't have a great sleep. The sleep monitor kind of showed this. I was hoping it would be like a >90% score, but it was 83%. Not bad, but just okay. I also had a bad dream that I remember some of, and whenever that happens it seems to have knock-on effects.
