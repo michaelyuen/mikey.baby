@@ -100,3 +100,7 @@ To my surprise, the data didn't show anything for "High Sleep Stress" or like pa
 One week. Woo-hoo! At this point I completed the first major milestones, "7 logged sleeps", and today unlocked the Health Monitor. I thought it would be a little more exciting. 🤷‍♂️
 
 Yesterday I worked out. It was a decent session. I feel some fatigue this morning and my right shoulder is a little more painful than usual when I move my arm in certain ways. Seems about right. I went to sleep at a good time (~11) and woke up a little after 7:30, but I didn't have a great sleep. The sleep monitor kind of showed this. I was hoping it would be like a >90% score, but it was 83%. Not bad, but just okay. I also had a bad dream that I remember some of, and whenever that happens it seems to have knock-on effects.
+
+## Day 8
+
+Not a great morning! Last night we went to our friend's stand up comedy show. That was fun, but we didn't realize how late it would go. So we weren't home until after 11 when I should have been sleeping. Also there was a two drink minimum, so I had a couple beers. Surely that didn't help. All in all, I ended up going to bed close to 1am after eating and admittedly watching tv longer than I should have. I'm definitely feeling it this morning, and the Whoop sleep analysis showed it too.
