@@ -7,7 +7,7 @@ image:
   url: "https://docs.astro.build/assets/rays.webp"
   alt: "Thumbnail of Astro rays."
 pubDate: 2025-11-15
-lastUpdated: 2025-11-15
+lastUpdated: 2025-11-23
 tags: ["quotes", "books", "reading", "lists", "top-100"]
 ---
 
@@ -29,7 +29,9 @@ https://www.npr.org/2011/08/11/139085843/your-picks-top-100-science-fiction-fant
 
 7. Fahrenheit 451, by Ray Bradbury ❌
 
-8. The Foundation Trilogy, by Isaac Asimov ❌
+8. The Foundation Trilogy, by Isaac Asimov 🔄
+  
+    - Foundation 🔄 _(apparently I read this once before, in August 2016)_
 
 9. Brave New World, by Aldous Huxley ✅
 
@@ -55,7 +57,7 @@ https://www.npr.org/2011/08/11/139085843/your-picks-top-100-science-fiction-fant
 
 20. Frankenstein, by Mary Shelley ❌
 
-21. Do Androids Dream Of Electric Sheep?, by Philip K. Dick 🔄
+21. Do Androids Dream Of Electric Sheep?, by Philip K. Dick ✅
 
 22. The Handmaid's Tale, by Margaret Atwood ❌
 
