@@ -7,7 +7,7 @@ image:
   url: "https://docs.astro.build/assets/rays.webp"
   alt: "Thumbnail of Astro rays."
 pubDate: 2025-11-13
-lastUpdated: 2025-11-18
+lastUpdated: 2025-11-23
 tags: ["whoop", "health"]
 ---
 
@@ -104,3 +104,13 @@ Yesterday I worked out. It was a decent session. I feel some fatigue this mornin
 ## Day 8
 
 Not a great morning! Last night we went to our friend's stand up comedy show. That was fun, but we didn't realize how late it would go. So we weren't home until after 11 when I should have been sleeping. Also there was a two drink minimum, so I had a couple beers. Surely that didn't help. All in all, I ended up going to bed close to 1am after eating and admittedly watching tv longer than I should have. I'm definitely feeling it this morning, and the Whoop sleep analysis showed it too.
+
+## Day 11
+
+I think this is day 11? No matter. I've felt a little off ever since Wednesday after going to the comedy show. That threw me off my sleep routine a little, but I'm not sure how much of a contributing factor it is. Since then, I've been pretty good about course correcting, but I think the biggest change from the first week is that I've tried to allow myself more sleep to account for the "sleep debt" Whoop says I've accrued. I kind of wonder if trying to naively course-correct caused more issues. Rather than waking up fairly easily at 7-7:30, I've notice if I'm trying to sleep in until 8 or 9 then I feel like I'm in the middle of a cycle because I'm actively dreaming and then _suddenly_ woken up by an alarm or some other stimulus. Overall, I know that 10 days is still a blink in reference to the longer-term trends and habits I'd like to form, so I don't want to overanalyze too much but I think the reflection is healthy.
+
+Today, I made the active choice to sleep in to pay off sleep debt. But I also made the active choice to stay up later watching tv. Ugh. I knew I would kind of regret it, but I knew what I was doing. So I think it did help somewhat, but at the same time I still need to get back to the routine I want to keep.
+
+The other consequence of sleeping later is, of course, waking up later. And waking up later, I have less time available in the mornings to accomplish parts of the routine I want like writing, reading, and even (eventually) exercising. With less time, these things ever get deferred to later or skipped entirely. I shouldn't feel so bad because this is essentially the status quo I've had for a while now. But I've started to have a taste of how sleeping and waking early can enable these activities and I don't want to go back!
+
+With today hopefully setting up a good opportunity to reset going into next week, I think I will try to stick to the alarm schedule I set up previously and not try to think or worry too much about the so-called sleep debt. If I feel good, then I feel good!
