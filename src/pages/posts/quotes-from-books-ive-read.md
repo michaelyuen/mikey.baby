@@ -28,11 +28,16 @@ At this point, I read the remainder of the book away from my computer, mostly on
 ## Foundation
 
 > Debarkation Building was tremendous. The roof was almost lost in the heights. Gaal could almost imagine that clouds could form beneath its immensity.
-> - Chapter 2
+> - Part I, Chapter 2
 
 > A figure detached itself from anonymity...
-> - Chapter 2
+> - Part I, Chapter 2
 
 > If you're born in a cubicle and grow up in a corridor, and work in a cell, and vacation in a crowded sun-room, then comning up into the open with nothing but sky over you might just give you a nervous breakdown.
-> - Chapter 3
+> - Part I, Chapter 3
 
+> Violence is the last refuge of the incompetent.
+> - Part II, Chapter 5
+
+> I consider violence an uneconomical way of attaining an end. There are always better substitutes, though they may sometimes be  a little less direct.
+- Part III, Chapter 6
