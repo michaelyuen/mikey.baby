@@ -41,3 +41,6 @@ At this point, I read the remainder of the book away from my computer, mostly on
 
 > I consider violence an uneconomical way of attaining an end. There are always better substitutes, though they may sometimes be  a little less direct.
 - Part III, Chapter 6
+
+## Into Thin Air
+
