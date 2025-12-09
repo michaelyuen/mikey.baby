@@ -1,0 +1,68 @@
+---
+layout: ../layouts/BaseLayout.astro
+title: Michael Yuen's website
+---
+
+import { Image } from "astro:assets";
+import avatar from "../images/olive-and-i.avif";
+
+# 👾 Greetings, earthling!
+
+<div class="float-right w-[200px] md:w-[350px]">
+    <svg
+        viewBox="0 0 100 100"
+        preserveAspectRatio="xMidYMid slice"
+        class="w-full h-full block"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <defs>
+  <clipPath id="mask" clipPathUnits="userSpaceOnUse">
+    <path
+      d="M 28.6 7.4
+         C 57.1 0 82 1.1 90.1 18.1
+         C 100 39.4 89 70 69 93
+         C 62 100 6.6 100 9.9 76
+         C 13.2 30.9 0 13.8 28.6 7.4 Z"
+    >
+      <animate
+        attributeName="d"
+        dur="10s"
+        repeatCount="indefinite"
+        values="
+          M 28.6 7.4 C 57.1 0 82 1.1 90.1 18.1 C 100 39.4 89 70 69 93 C 62 100 6.6 100 9.9 76 C 13.2 30.9 0 13.8 28.6 7.4 Z;
+          M 20 10 C 34.5 0 50 0 60 20 C 79.5 40 90 30 96 50 C 100 100 60 100 31.8 90 C 0 76 0 30 20 10 Z;
+          M 10 45 C 24 0 55 0 80 10 C 100 20 80 43 89 60 C 100 85 80 96 50 96 C 20 97 5 76.5 10 45 Z;
+          M 28.6 7.4 C 57.1 0 82 1.1 90.1 18.1 C 100 39.4 89 70 69 93 C 62 100 6.6 100 9.9 76 C 13.2 30.9 0 13.8 28.6 7.4 Z
+        "
+      />
+    </path>
+  </clipPath>
+</defs>
+
+        <image
+        href={avatar.src}
+        width="100"
+        height="100"
+        preserveAspectRatio="xMidYMid slice"
+        clip-path="url(#mask)"
+        />
+    </svg>
+</div>
+
+<small>_(something my Dad would always say)_</small>
+
+My name is <span class="font-tw-gaegu text-2xl underline decoration-wavy regular">Michael</span> but some people call me `my`.
+
+I'm an ordinary guy living my best life in 📍Brooklyn with my girlfriend and our dogs, Astro and Olive. In my free time, I'm usually cuddling our dogs, reading, or weightlifting. Currently, I'm reading Foundation by Isaac Asimov and watching Mr. Robot.
+
+My girlfriend and I also enjoy exploring the best food and drinks New York City has to offer. Right now, I think the best martini <small>_(olive or pickle)_</small> is at [Bar Laika](https://www.laika.bar/), the best bar is [schmuck.](https://resy.com/cities/new-york-ny/venues/schmuck-nyc), and the best restaurant is [SHŌSH](https://resy.com/cities/new-york-ny/venues/shosh). As we travel, we've sought out the [The World's 50 Best Bars](https://www.theworlds50best.com/bars/list/1-50). I've been to 11 now, she has been to more. Relatedly, I've been to 7 countries so far, and I can't wait to get those rookie numbers up! It's super hard to pick a favorite, but given recency bias perhaps I will say France as a whole.
+
+Living an ethical lifestyle is incredibly important to me. As an animal lover, I've been vegan for over four years now <small>_(since 2021-09-01)_</small>. [Can you truly love animals if you aren't?](https://www.penguinrandomhouse.com/books/622185/how-to-love-animals-by-henry-mance/) Another cause I feel strongly about is extreme poverty, which I learned about from [The Life You Can Save](https://www.thelifeyoucansave.org/book/) by way of [Effective Altruism](https://www.effectivealtruism.org/).
+
+> The World Bank defines extreme poverty as living on $3 per person per day or less
+
+Since reading The Life You Can Save in 2023, I've been donating ~5% of my income to Give Directly in support of extreme poverity.
+
+Professionally, I'm a software engineer with a passion for user interfaces and user experiences.
+
+Currently, I work as an Engineering Manager at Major League Baseball. My team and I work across <a href="https://www.mlb.com" rel="noreferrer" target="_blank">mlb.com</a> and <a href="https://www.milb.com" rel="noreferrer" target="_blank">milb.com</a>. Previously, I worked at Resy on <a href="https://www.resy.com" rel="noreferrer" target="_blank">resy.com</a>.
