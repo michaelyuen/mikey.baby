@@ -1,4 +1,5 @@
 ---
+import Analytics from "@vercel/analytics/astro";
 import type { MarkdownLayoutProps } from "astro";
 import { Font } from "astro:assets";
 import Header from "../components/Header.astro";
@@ -46,5 +47,6 @@ const { frontmatter, isFullWidth, title } = Astro.props;
       <slot />
     </main>
     <!-- <Footer /> -->
+    <Analytics />
   </body>
 </html>
