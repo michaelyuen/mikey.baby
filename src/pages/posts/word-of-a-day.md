@@ -14,12 +14,25 @@ tags: ["whoop", "health"]
 ## 2025-11-30
 
 Vociferous
+
 > Vociferous people express their opinions and complaints loudly and repeatedly in speech, and vociferous demands, etc. are made repeatedly and loudly:
+>
 > - Local activist groups have become increasingly vociferous as the volume of traffic passing through the town has increased.
 > - A vociferous opponent of gay rights, he is well-known for his right-wing views.
 
 ## 2025-12-07
 
 Apoplectic
+
 > extremely and obviously angry:
+>
 > - He was apoplectic with rage/fury.
+
+# 2025-12-11
+
+Intransigence
+
+> the quality of refusing to change your opinions or behavior:
+>
+> - Officials yesterday blamed the assembly's intransigence for the failure to reach a deal.
+> - The underlying reason for the prolongation of the war is intransigence on all sides.
