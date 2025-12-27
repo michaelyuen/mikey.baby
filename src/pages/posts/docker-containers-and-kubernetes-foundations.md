@@ -612,3 +612,80 @@ metadata:
 - `kubectl create ns [namespaceName]`: create a namespace
 - `kubectl delete ns [namespaceName]`: delete a namespace
 - `kubectl get pods --all-namespaces`: list all pods in a namespace
+
+## Master Node
+
+Also called the control plane. Where kubernetes services and controller are located, which are also called master components. You don't usually run your containers on the master node.
+
+etcd is key value datastore where state of cluster is stored. apiserver communicates with it.
+
+### kube-apiserver
+
+REST interface. Communicates with etcd.
+
+### etcd
+
+single source of truth
+
+### kube-control-manager
+
+controller of controllers
+
+- node controller
+- replication controller
+- endpoints controller
+- service account & token controllers
+
+### cloud-control-manager
+
+Interact with cloud providers controllers
+
+### kube-scheduler
+
+- watches for newly created pods and selects nodes for them to run on.
+- factors for making scheduling decisions include:
+  - individual and collective resource requirements
+  - hardware/software/policy contraints
+  - affinity and anti-affinity specs
+  - data locality
+
+### Add ons
+
+- DNS
+- Web UI (dashboard)
+- cluster-level logging
+- container resource monitoring
+
+## Worker Nodes
+
+Nodes running containers.
+
+### kubelet
+
+- manages pod lifecycle
+- makes sure pods are running and healthy
+
+### kube-proxy
+
+- network proxy
+- all traffic goes through it
+
+### Container runtime
+
+### Nodes pool
+
+- a node pool is a group of virtual machines, all with the same size
+- a cluster can have multiple node pools
+- each pool can be different sizes and scaled independently
+
+## Pods
+
+- smallest unit of work in kubernetes
+- encapsulates a container
+- unit of deployment
+- pods can run one or more containers
+- share same ip address space and volumes
+- pods are ephemeral
+- deploying suceeds or not
+- you don't update a pod, you replace it with a new one that's updated
+- scale by adding more pods
