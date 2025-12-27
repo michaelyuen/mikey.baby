@@ -87,22 +87,32 @@ https://www.cncf.io/blog/2018/03/08/introducing-the-cloud-native-landscape-2-0-i
 - set key performance indicators
 
 1. Containerization
-  - docker containers
-  - any size app and deps can be containerized
+
+- docker containers
+- any size app and deps can be containerized
+
 2. CI/CD
-  - argo
+
+- argo
+
 3. Orchestration & Application Definition
-  - kubernetes, helm
-  - k8s is the market-leading orchestration solution
-  - you should select a Certified K8s Distribution Hosted Platform
-  - helm charts help define, install, and upgrade even the most complex k8s apps
+
+- kubernetes, helm
+- k8s is the market-leading orchestration solution
+- you should select a Certified K8s Distribution Hosted Platform
+- helm charts help define, install, and upgrade even the most complex k8s apps
+
 4. Observability & Analysis
-  - prometheus, fluentd, jaeger, opentracing
+
+- prometheus, fluentd, jaeger, opentracing
+
 5. Service Proxy, Discovery, and Mesh
-  - envoy, coreDNS, linkerd
-  - CoreDNS -- fast and flexible tool for service discovery
-  - Envoy and Linkerd -- enable service mesh architectures
-  - they offer health checking, routing, and load balancing
+
+- envoy, coreDNS, linkerd
+- CoreDNS -- fast and flexible tool for service discovery
+- Envoy and Linkerd -- enable service mesh architectures
+- they offer health checking, routing, and load balancing
+
 6. Networking & Policy
 
 ## Containers Concepts
@@ -129,6 +139,7 @@ https://www.cncf.io/blog/2018/03/08/introducing-the-cloud-native-landscape-2-0-i
 - virtualize the hardware
 
 Compared with Container:
+
 - container doesn't have to boot; uses host OS kernel
 - use much less memory and HD space since there's no OS
 
@@ -145,10 +156,12 @@ Compared with Container:
   - application
 
 container registry
+
 - centralized container repository
 - like github for containers
 
 orchestrator
+
 - manage deployed containers
 
 ## What is Docker?
@@ -159,6 +172,7 @@ orchestrator
 - sold enterprise edition to Mirantis. Must get certified through Mirantis.
 
 ok, but really...
+
 - open source container runtime
 - command line tool
 - "Dockerfile" format for building container images
@@ -213,12 +227,14 @@ Running `docker container exec -it webserver bash` to attach to the running cont
 text file listing steps to build an image
 
 Most simple version:
+
 ```docker
 FROM nginx:alpine
 COPY . /usr/share/nginx/html
 ```
 
 Node site:
+
 ```docker
 FROM alpine
 RUN apk add -update nodejs nodejs-npm
@@ -235,6 +251,7 @@ ENTRYPOINT ["node", "./app.js"]
 - Also installed Docker DX extension
 
 Following tutorial, ran different docker (container) commands from the command palette:
+
 - `> Containers: add Docker Files to Workspace`: creates Dockerfile after following prompts
 - `> Container Images: Build Image...`: builds it
 - `> Container Images: Run`: runs it. I went to `localhost:3000` in browser and I could see the running app
@@ -293,6 +310,7 @@ Docker compose is a way to define and run multiple containers using a single YAM
   - docker compose is v2; drop-in replacement (go)
 
 Docker compose example:
+
 ```docker
 # now optional
 version: '3.9'
@@ -519,3 +537,78 @@ services:
   - Minikube
 - Runs over Docker Desktop
   - Kind
+
+## K8s CLI & Context
+
+API server runs on master node. Exposes REST API. Define desired state in YAML files.
+
+`kubectl` is the cli. Communicates with apiserver. Configuration stored locally:
+
+- `${HOME}/.kube/config`
+- `C:\Users\{USER}\.kube\config`
+
+### K8s Context
+
+- A group of access parameters to connect to a k8s cluster
+- Contains a cluster, a user, and a namespace
+- The current context is the cluster that is currently the default for kubectl
+
+### kubectl Cheatsheet
+
+- `kubectl config current-context`: get the current context
+- `kubectl config get-contexts`: list all contexts
+- `kubectl config use-context [contextName]`: set the current context
+- `kubectl config delete-context [contextName]`: delete a context from the config file
+
+- `kubectx` is a shortcut to quickly switch context. Open source tool. Shortcut for `kubectl config use-context`.
+
+### Hands-on
+
+Using kubectl commands.
+
+### Declarative way vs. Imperative way
+
+- imperative
+  - using kubectl commands, issue a series of commands to create resources
+  - great for learning, testing, and troubleshooting
+  - it's like code
+- declarative
+  - using kubectl and YAML manifests defining the resources that you need
+  - reproducible, repeatable
+  - can be saved in source control
+  - like data that can be parsed and modified
+
+## Namespaces
+
+- Allow to group resources
+  - e.g., dev, test, prod
+- Like logical folders to group resources
+- Objects in one namespace can access objects in a different one
+- Deleting a namespace will delete all its child objects
+
+You define a namespace:
+
+```docker
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: prod
+```
+
+Use namespace in other resources:
+
+```docker
+kind: Pod
+metadata:
+  name: myapp-pod
+  namespace: prod
+```
+
+### Namespace Cheatsheet
+
+- `kubectl get namespace`: list all namespaces
+- `kubectl get ns`: ns is a shortcut for namespace
+- `kubectl config set-context --current -- namespace=[namespaceName]`: set the current context to use a namespace
+- `kubectl create ns [namespaceName]`: create a namespace
+- `kubectl delete ns [namespaceName]`: delete a namespace
+- `kubectl get pods --all-namespaces`: list all pods in a namespace
