@@ -1,0 +1,630 @@
+---
+import type { GalleryPhoto } from "../lib/photo-gallery";
+
+interface Props {
+  id: string;
+  photos: GalleryPhoto[] | Promise<GalleryPhoto[]>;
+}
+
+const { id } = Astro.props;
+const photos = await Astro.props.photos;
+const thumbnailSizes =
+  "(min-width: 1328px) 416px, (min-width: 1100px) calc((100vw - 80px) / 3), (min-width: 700px) calc((100vw - 64px) / 2), calc(100vw - 48px)";
+---
+
+<section
+  aria-labelledby={`${id}-title`}
+  class="photo-gallery not-prose"
+  data-gallery
+  id={id}
+>
+  <noscript
+    ><p>
+      Enable JavaScript for the viewer and B&W switches. Photo links still open
+      colour originals.
+    </p></noscript
+  >
+  <div class="photo-grid">
+    {
+      photos.map((photo, index) => (
+        <figure data-card={index}>
+          <a
+            aria-label={`Open ${photo.alt}`}
+            data-open={index}
+            href={photo.colour.original}
+          >
+            <img
+              alt={`${photo.alt} (colour)`}
+              decoding="async"
+              height={photo.colour.thumbnail.height}
+              loading="lazy"
+              sizes={thumbnailSizes}
+              src={photo.colour.thumbnail.src}
+              srcset={photo.colour.thumbnail.srcset}
+              width={photo.colour.thumbnail.width}
+            />
+          </a>
+          <p aria-live="polite" class="card-status" data-card-status />
+          <button data-thumbnail-retry={index} hidden type="button">
+            Retry thumbnail
+          </button>
+        </figure>
+      ))
+    }
+  </div>
+  <dialog aria-labelledby={`${id}-viewer-title`} tabindex="-1">
+    <div class="viewer">
+      <header>
+        <h2 id={`${id}-viewer-title`}>Photo viewer</h2>
+        <div class="viewer-actions">
+          <button
+            aria-label="Black and white version"
+            aria-pressed="false"
+            data-viewer-toggle
+            type="button">B&W</button
+          >
+          <a data-original hidden rel="noopener" target="_blank"
+            >View original <span class="sr-only">(opens in a new tab)</span></a
+          >
+          <button data-close type="button">Close</button>
+        </div>
+      </header>
+      <div class="viewer-image"><img alt="" hidden /></div>
+      <p aria-live="polite" class="viewer-status" data-viewer-status></p>
+      <div class="viewer-caption-row">
+        <p class="viewer-caption" data-viewer-caption></p>
+        <div class="viewer-navigation">
+          <button aria-label="Previous photo" data-previous type="button"
+            >Previous</button
+          >
+          <button aria-label="Next photo" data-next type="button">Next</button>
+        </div>
+      </div>
+      <footer>
+        <button data-retry hidden type="button">Retry</button>
+      </footer>
+    </div>
+  </dialog>
+  <script
+    data-gallery-photos
+    is:inline
+    set:html={JSON.stringify(photos).replace(/</g, "\\u003c")}
+    type="application/json"
+  />
+</section>
+
+<script>
+  import { justifiedRows } from "../lib/justified-layout";
+  import type {
+    GalleryImage,
+    GalleryPhoto,
+    PhotoVariant,
+  } from "../lib/photo-gallery";
+
+  function initializeGallery(root: HTMLElement) {
+    function required<T extends Element>(selector: string): T {
+      const element = root.querySelector<T>(selector);
+      if (!element) throw new Error(`Photo gallery: missing ${selector}.`);
+      return element;
+    }
+
+    const serialized = required<HTMLScriptElement>(
+      "[data-gallery-photos]",
+    ).textContent;
+    if (!serialized) throw new Error("Photo gallery: missing photo metadata.");
+    const photos: GalleryPhoto[] = JSON.parse(serialized);
+    const dialog = required<HTMLDialogElement>("dialog");
+    const viewerImage = required<HTMLImageElement>(".viewer-image img");
+    const viewerFrame = required<HTMLElement>(".viewer-image");
+    const viewerTitle = required<HTMLElement>("dialog h2");
+    const status = required<HTMLElement>("[data-viewer-status]");
+    const caption = required<HTMLElement>("[data-viewer-caption]");
+    const original = required<HTMLAnchorElement>("[data-original]");
+    const previous = required<HTMLButtonElement>("[data-previous]");
+    const next = required<HTMLButtonElement>("[data-next]");
+    const toggle = required<HTMLButtonElement>("[data-viewer-toggle]");
+    const retry = required<HTMLButtonElement>("[data-retry]");
+    const variants: PhotoVariant[] = photos.map(() => "colour");
+    const grid = required<HTMLElement>(".photo-grid");
+    const cards = [...grid.querySelectorAll<HTMLElement>("[data-card]")];
+    const busyCards = new Set<number>();
+    let index = 0;
+    let pendingVariant: PhotoVariant = "colour";
+    let request = 0;
+    let opener: HTMLAnchorElement | null = null;
+    let previousOverflow = "";
+    let busyFocus: HTMLButtonElement | null = null;
+    let displayed: { index: number; variant: PhotoVariant } | null = null;
+
+    const label = (variant: PhotoVariant) =>
+      variant === "colour" ? "colour" : "B&W";
+    const other = (variant: PhotoVariant): PhotoVariant =>
+      variant === "colour" ? "bw" : "colour";
+    const card = (position: number) =>
+      required<HTMLElement>(`[data-card="${position}"]`);
+    const cardImage = (position: number) =>
+      card(position).querySelector<HTMLImageElement>("img")!;
+    const cardStatus = (position: number) =>
+      card(position).querySelector<HTMLElement>("[data-card-status]")!;
+
+    function layoutGallery() {
+      const width = grid.getBoundingClientRect().width;
+      if (width <= 16) return;
+      const rows = justifiedRows(
+        photos.map((photo, position) => {
+          const source = photo[variants[position]].thumbnail;
+          return source.width / source.height;
+        }),
+        width,
+      );
+      rows.forEach((row, rowIndex) => {
+        row.widths.forEach((cardWidth, offset) => {
+          const position = row.start + offset;
+          cards[position].style.width = `${cardWidth}px`;
+          cards[position].dataset.row = String(rowIndex);
+          cardImage(position).style.height = `${row.height}px`;
+          cardImage(position).sizes = `${cardWidth}px`;
+        });
+      });
+      grid.dataset.justified = "";
+    }
+
+    layoutGallery();
+    let observedWidth = grid.getBoundingClientRect().width;
+    new ResizeObserver(([entry]) => {
+      if (Math.abs(entry.contentRect.width - observedWidth) < 0.1) return;
+      observedWidth = entry.contentRect.width;
+      layoutGallery();
+    }).observe(grid);
+
+    function applyImage(
+      image: HTMLImageElement,
+      source: GalleryImage["thumbnail"],
+    ) {
+      image.width = source.width;
+      image.height = source.height;
+      image.srcset = source.srcset;
+      image.src = source.src;
+    }
+
+    function viewerSizes(source: GalleryImage["viewer"]) {
+      const width = Math.min(
+        viewerFrame.clientWidth,
+        (viewerFrame.clientHeight * source.width) / source.height,
+      );
+      return `${Math.max(1, Math.ceil(width))}px`;
+    }
+
+    async function preload(source: GalleryImage["thumbnail"], sizes: string) {
+      const image = new Image();
+      image.sizes = sizes;
+      applyImage(image, source);
+      await image.decode();
+    }
+
+    function commitCard(position: number, variant: PhotoVariant) {
+      const photo = photos[position];
+      const image = cardImage(position);
+      variants[position] = variant;
+      layoutGallery();
+      applyImage(image, photo[variant].thumbnail);
+      image.alt = `${photo.alt} (${label(variant)})`;
+      card(position).querySelector<HTMLAnchorElement>("[data-open]")!.href =
+        photo[variant].original;
+      cardStatus(position).textContent = "";
+    }
+
+    async function loadCard(position: number, variant: PhotoVariant) {
+      if (busyCards.has(position)) return;
+      busyCards.add(position);
+      const button = card(position).querySelector<HTMLButtonElement>(
+        "[data-thumbnail-retry]",
+      )!;
+      button.setAttribute("aria-disabled", "true");
+      cardStatus(position).textContent = `Loading ${label(variant)}…`;
+      try {
+        await preload(
+          photos[position][variant].thumbnail,
+          cardImage(position).sizes,
+        );
+        commitCard(position, variant);
+      } catch (error) {
+        console.error(
+          "Photo gallery: thumbnail load failed.",
+          photos[position].filename,
+          error,
+        );
+        cardStatus(position).textContent =
+          "Could not load this thumbnail. Select Retry thumbnail.";
+      } finally {
+        busyCards.delete(position);
+        button.removeAttribute("aria-disabled");
+      }
+    }
+
+    function setBusy(busy: boolean) {
+      if (busy) {
+        const active = document.activeElement;
+        busyFocus =
+          [previous, next, toggle, retry].find((button) => button === active) ??
+          null;
+      }
+      dialog.setAttribute("aria-busy", String(busy));
+      previous.disabled = busy || index === 0;
+      next.disabled = busy || index === photos.length - 1;
+      toggle.disabled = busy;
+      if (busy && busyFocus) dialog.focus();
+      if (!busy && busyFocus && document.activeElement === dialog) {
+        if (busyFocus.disabled || busyFocus.hidden)
+          required<HTMLButtonElement>("[data-close]").focus();
+        else busyFocus.focus();
+      }
+    }
+
+    async function show(position: number, variant: PhotoVariant) {
+      const token = ++request;
+      index = position;
+      pendingVariant = variant;
+      const photo = photos[position];
+      const source = photo[variant];
+      viewerTitle.textContent = `Photo ${position + 1} of ${photos.length} · ${label(variant)}`;
+      // caption.textContent = photo.caption ?? photo.alt;
+      original.href = source.original;
+      original.hidden = false;
+      status.textContent = `Loading photo ${position + 1} (${label(variant)})…`;
+      setBusy(true);
+      retry.hidden = true;
+      try {
+        await Promise.all([
+          preload(source.viewer, viewerSizes(source.viewer)),
+          ...(variants[position] !== variant
+            ? [preload(source.thumbnail, cardImage(position).sizes)]
+            : []),
+        ]);
+        if (token !== request || !dialog.open) return;
+        commitCard(position, variant);
+        viewerImage.sizes = viewerSizes(source.viewer);
+        applyImage(viewerImage, source.viewer);
+        viewerImage.alt = `${photo.alt} (${label(variant)})`;
+        viewerImage.hidden = false;
+        displayed = { index: position, variant };
+        viewerTitle.textContent = `Photo ${position + 1} of ${photos.length} · ${label(variant)}`;
+        // caption.textContent = photo.caption ?? photo.alt;
+        original.href = source.original;
+        original.hidden = false;
+        toggle.setAttribute("aria-pressed", String(variant === "bw"));
+        status.textContent = "";
+      } catch (error) {
+        if (token !== request || !dialog.open) return;
+        console.error(
+          "Photo gallery: viewer image failed.",
+          photo.filename,
+          error,
+        );
+        status.textContent = `Could not load photo ${position + 1} (${label(variant)}). Retry or choose another photo.`;
+        retry.hidden = false;
+      } finally {
+        if (token === request && dialog.open) setBusy(false);
+      }
+    }
+
+    root
+      .querySelectorAll<HTMLButtonElement>("[data-thumbnail-retry]")
+      .forEach((button) => {
+        const position = Number(button.dataset.thumbnailRetry);
+        button.addEventListener("click", async () => {
+          await loadCard(position, variants[position]);
+          if (cardImage(position).naturalWidth) button.hidden = true;
+        });
+        const image = cardImage(position);
+        const reportError = () => {
+          console.error(
+            "Photo gallery: thumbnail failed.",
+            photos[position].filename,
+          );
+          cardStatus(position).textContent =
+            "Could not load this thumbnail. Select Retry thumbnail.";
+          button.hidden = false;
+        };
+        image.addEventListener("error", reportError);
+        image.addEventListener("load", () => {
+          button.hidden = true;
+        });
+        if (image.complete && !image.naturalWidth) reportError();
+      });
+    root.querySelectorAll<HTMLAnchorElement>("[data-open]").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        if (
+          event.ctrlKey ||
+          event.metaKey ||
+          event.shiftKey ||
+          event.altKey ||
+          event.button !== 0
+        )
+          return;
+        if (!("showModal" in dialog)) return;
+        event.preventDefault();
+        const position = Number(link.dataset.open);
+        if (busyCards.has(position)) return;
+        opener = link;
+        viewerImage.hidden = true;
+        displayed = null;
+        viewerImage.removeAttribute("srcset");
+        viewerImage.removeAttribute("src");
+        viewerTitle.textContent = "Photo viewer";
+        caption.textContent = "";
+        original.hidden = true;
+        previousOverflow = document.documentElement.style.overflow;
+        dialog.showModal();
+        document.documentElement.style.overflow = "hidden";
+        void show(position, variants[position]);
+      });
+    });
+    required<HTMLButtonElement>("[data-close]").addEventListener("click", () =>
+      dialog.close(),
+    );
+    previous.addEventListener(
+      "click",
+      () => void show(index - 1, variants[index - 1]),
+    );
+    next.addEventListener(
+      "click",
+      () => void show(index + 1, variants[index + 1]),
+    );
+    toggle.addEventListener(
+      "click",
+      () => void show(index, other(variants[index])),
+    );
+    retry.addEventListener("click", () => void show(index, pendingVariant));
+    let backdropPointerDown = false;
+    function isOutsideDialog(event: MouseEvent) {
+      const bounds = dialog.getBoundingClientRect();
+      return (
+        event.target === dialog &&
+        (event.clientX < bounds.left ||
+          event.clientX > bounds.right ||
+          event.clientY < bounds.top ||
+          event.clientY > bounds.bottom)
+      );
+    }
+    dialog.addEventListener("pointerdown", (event) => {
+      backdropPointerDown = event.button === 0 && isOutsideDialog(event);
+    });
+    dialog.addEventListener("pointercancel", () => {
+      backdropPointerDown = false;
+    });
+    dialog.addEventListener("click", (event) => {
+      if (backdropPointerDown && isOutsideDialog(event)) dialog.close();
+      backdropPointerDown = false;
+    });
+    dialog.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        dialog.close();
+      } else if (event.key === "ArrowLeft" && !previous.disabled) {
+        event.preventDefault();
+        previous.click();
+      } else if (event.key === "ArrowRight" && !next.disabled) {
+        event.preventDefault();
+        next.click();
+      }
+    });
+    dialog.addEventListener("close", () => {
+      backdropPointerDown = false;
+      request++;
+      document.documentElement.style.overflow = previousOverflow;
+      opener?.focus({ preventScroll: true });
+    });
+    window.addEventListener("resize", () => {
+      if (dialog.open) {
+        const source = displayed
+          ? photos[displayed.index][displayed.variant].viewer
+          : photos[index][pendingVariant].viewer;
+        viewerImage.sizes = viewerSizes(source);
+      }
+    });
+  }
+
+  document
+    .querySelectorAll<HTMLElement>("[data-gallery]")
+    .forEach(initializeGallery);
+</script>
+
+<style>
+  .photo-gallery {
+    margin-inline: calc(50% - min(640px, 50vw - 24px));
+    width: min(1280px, calc(100vw - 48px));
+  }
+  .photo-gallery h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-block: 1rem;
+  }
+  .photo-gallery p {
+    margin-block: 0.75rem;
+  }
+  .photo-grid {
+    align-items: start;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .photo-grid[data-justified] {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  figure {
+    margin: 0;
+    min-width: 0;
+  }
+  .photo-grid[data-justified] figure {
+    flex: 0 0 auto;
+  }
+  figure img {
+    background: #e5e7eb;
+    display: block;
+    height: auto;
+    object-fit: contain;
+    width: 100%;
+  }
+  figure a {
+    display: block;
+  }
+  button,
+  .viewer-actions a {
+    border: 1px solid currentColor;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.875rem;
+    padding: 0.4rem 0.75rem;
+    text-decoration: none;
+  }
+  button[aria-pressed="true"] {
+    background: #333;
+    color: white;
+  }
+  button:disabled,
+  button[aria-disabled="true"] {
+    cursor: wait;
+    opacity: 0.5;
+  }
+  a:focus-visible,
+  button:focus-visible {
+    outline: 3px solid #3b82f6;
+    outline-offset: 3px;
+  }
+  .card-status {
+    font-size: 0.875rem;
+  }
+  .card-status:empty {
+    display: none;
+  }
+  dialog {
+    background: white;
+    border: 1px solid #888;
+    border-radius: 0.75rem;
+    color: #111;
+    height: 94dvh;
+    margin: auto;
+    max-height: none;
+    max-width: none;
+    overflow: hidden;
+    padding: 1rem;
+    width: min(1200px, 94vw);
+  }
+  dialog::backdrop {
+    background: rgb(0 0 0 / 85%);
+  }
+  .viewer {
+    display: grid;
+    gap: 0.5rem;
+    grid-template-rows: auto minmax(0, 1fr) 2.5em 3em auto;
+    height: 100%;
+    min-height: 0;
+  }
+  header {
+    align-items: center;
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .viewer-caption-row {
+    align-items: center;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+    min-width: 0;
+  }
+  header h2 {
+    font-size: 1rem !important;
+    margin: 0 !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .viewer-navigation {
+    display: flex;
+    flex-shrink: 0;
+    gap: 0.5rem;
+  }
+  .viewer-navigation button {
+    padding-inline: 0.5rem;
+    width: 5.25rem;
+  }
+  .viewer-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    justify-content: end;
+  }
+  footer {
+    display: grid;
+    justify-content: center;
+  }
+  footer [hidden],
+  .viewer-actions [hidden] {
+    display: block !important;
+    visibility: hidden;
+  }
+  .viewer-image {
+    align-items: center;
+    background: #e5e7eb;
+    display: flex;
+    justify-content: center;
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .viewer-image img {
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    width: 100%;
+  }
+  .viewer-status {
+    font-size: 0.875rem;
+    margin: 0 !important;
+    overflow: auto;
+  }
+  .viewer-caption {
+    font-size: 0.875rem;
+    margin: 0 !important;
+    max-height: 100%;
+    min-width: 0;
+    overflow: auto;
+  }
+  :global(.dark) dialog {
+    background: #171717;
+    color: #eee;
+  }
+  :global(.dark) figure img,
+  :global(.dark) .viewer-image {
+    background: #262626;
+  }
+  :global(.dark) button[aria-pressed="true"] {
+    background: #eee;
+    color: #111;
+  }
+  [hidden] {
+    display: none !important;
+  }
+  @media (min-width: 700px) {
+    .photo-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 699px) {
+    .viewer-actions a,
+    .viewer-actions button {
+      font-size: 0.75rem;
+      padding: 0.4rem 0.5rem;
+    }
+  }
+  @media (min-width: 1100px) {
+    .photo-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

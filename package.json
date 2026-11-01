@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "license": "GPL-3.0-or-later",
-  "packageManager": "pnpm@10.20.0",
+  "packageManager": "pnpm@10.25.0+sha512.5e82639027af37cf832061bcc6d639c219634488e0f2baebe785028a793de7b525ffcd3f7ff574f5e9860654e098fe852ba8ac5dd5cefe1767d23a020a92f501",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -24,6 +24,7 @@
     "astro": "^5.16.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3"
   },
