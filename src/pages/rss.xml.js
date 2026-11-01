@@ -5,7 +5,7 @@ export async function GET(context) {
     title: "Michael Yuen's Blog",
     description: "My stuff and thangs",
     site: context.site,
-    items: await pagesGlobToRssItems(import.meta.glob("./**/*.md")),
+    items: await pagesGlobToRssItems(import.meta.glob("./**/*.{md,mdx}")),
     customData: `<language>en-us</language>`,
   });
 }

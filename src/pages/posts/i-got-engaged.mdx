@@ -1,0 +1,20 @@
+---
+layout: ../../layouts/MarkdownPostLayout.astro
+title: I got engaged!
+author: my
+description: "And she said yes!!!"
+image:
+  url: "https://docs.astro.build/assets/rays.webp"
+  alt: "Thumbnail of Astro rays."
+pubDate: 2026-11-01
+tags: ["personal", "engagement", "proposal", "castle-combe"]
+---
+
+import PhotoGallery from "../../components/PhotoGallery.astro";
+import { getEngagementPhotos } from "../../lib/photo-gallery";
+
+<PhotoGallery
+  id="engagement-gallery"
+  photos={getEngagementPhotos()}
+  title="Our engagement photos"
+/>
