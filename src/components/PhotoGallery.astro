@@ -4,13 +4,12 @@ import type { GalleryPhoto } from "../lib/photo-gallery";
 interface Props {
   id: string;
   photos: GalleryPhoto[] | Promise<GalleryPhoto[]>;
-  title: string;
 }
 
-const { id, title } = Astro.props;
+const { id } = Astro.props;
 const photos = await Astro.props.photos;
 const thumbnailSizes =
-  "(min-width: 1148px) 356px, (min-width: 1100px) calc((100vw - 80px) / 3), (min-width: 700px) calc((100vw - 64px) / 2), calc(100vw - 48px)";
+  "(min-width: 1328px) 416px, (min-width: 1100px) calc((100vw - 80px) / 3), (min-width: 700px) calc((100vw - 64px) / 2), calc(100vw - 48px)";
 ---
 
 <section
@@ -19,11 +18,6 @@ const thumbnailSizes =
   data-gallery
   id={id}
 >
-  <h2 id={`${id}-title`}>{title}</h2>
-  <p>
-    {photos.length} photos. Select a photo to open it. Each photo has a colour and
-    B&W version.
-  </p>
   <noscript
     ><p>
       Enable JavaScript for the viewer and B&W switches. Photo links still open
@@ -50,19 +44,6 @@ const thumbnailSizes =
               width={photo.colour.thumbnail.width}
             />
           </a>
-          <div class="card-controls">
-            <span>Photo {index + 1}</span>
-            <button
-              aria-label={`Black and white version of photo ${index + 1}`}
-              aria-pressed="false"
-              data-toggle={index}
-              hidden
-              type="button"
-            >
-              B&W
-            </button>
-          </div>
-          {photo.caption && <figcaption>{photo.caption}</figcaption>}
           <p aria-live="polite" class="card-status" data-card-status />
           <button data-thumbnail-retry={index} hidden type="button">
             Retry thumbnail
@@ -75,26 +56,32 @@ const thumbnailSizes =
     <div class="viewer">
       <header>
         <h2 id={`${id}-viewer-title`}>Photo viewer</h2>
-        <button data-close type="button">Close</button>
+        <div class="viewer-actions">
+          <button
+            aria-label="Black and white version"
+            aria-pressed="false"
+            data-viewer-toggle
+            type="button">B&W</button
+          >
+          <a data-original hidden rel="noopener" target="_blank"
+            >View original <span class="sr-only">(opens in a new tab)</span></a
+          >
+          <button data-close type="button">Close</button>
+        </div>
       </header>
       <div class="viewer-image"><img alt="" hidden /></div>
       <p aria-live="polite" class="viewer-status" data-viewer-status></p>
-      <p class="viewer-caption" data-viewer-caption></p>
+      <div class="viewer-caption-row">
+        <p class="viewer-caption" data-viewer-caption></p>
+        <div class="viewer-navigation">
+          <button aria-label="Previous photo" data-previous type="button"
+            >Previous</button
+          >
+          <button aria-label="Next photo" data-next type="button">Next</button>
+        </div>
+      </div>
       <footer>
-        <button aria-label="Previous photo" data-previous type="button"
-          >Previous</button
-        >
-        <button
-          aria-label="Black and white version"
-          aria-pressed="false"
-          data-viewer-toggle
-          type="button">B&W</button
-        >
-        <button aria-label="Next photo" data-next type="button">Next</button>
         <button data-retry hidden type="button">Retry</button>
-        <a data-original hidden rel="noopener" target="_blank"
-          >View original <span class="sr-only">(opens in a new tab)</span></a
-        >
       </footer>
     </div>
   </dialog>
@@ -107,6 +94,7 @@ const thumbnailSizes =
 </section>
 
 <script>
+  import { justifiedRows } from "../lib/justified-layout";
   import type {
     GalleryImage,
     GalleryPhoto,
@@ -127,6 +115,7 @@ const thumbnailSizes =
     const photos: GalleryPhoto[] = JSON.parse(serialized);
     const dialog = required<HTMLDialogElement>("dialog");
     const viewerImage = required<HTMLImageElement>(".viewer-image img");
+    const viewerFrame = required<HTMLElement>(".viewer-image");
     const viewerTitle = required<HTMLElement>("dialog h2");
     const status = required<HTMLElement>("[data-viewer-status]");
     const caption = required<HTMLElement>("[data-viewer-caption]");
@@ -136,6 +125,8 @@ const thumbnailSizes =
     const toggle = required<HTMLButtonElement>("[data-viewer-toggle]");
     const retry = required<HTMLButtonElement>("[data-retry]");
     const variants: PhotoVariant[] = photos.map(() => "colour");
+    const grid = required<HTMLElement>(".photo-grid");
+    const cards = [...grid.querySelectorAll<HTMLElement>("[data-card]")];
     const busyCards = new Set<number>();
     let index = 0;
     let pendingVariant: PhotoVariant = "colour";
@@ -153,10 +144,38 @@ const thumbnailSizes =
       required<HTMLElement>(`[data-card="${position}"]`);
     const cardImage = (position: number) =>
       card(position).querySelector<HTMLImageElement>("img")!;
-    const cardToggle = (position: number) =>
-      card(position).querySelector<HTMLButtonElement>("[data-toggle]")!;
     const cardStatus = (position: number) =>
       card(position).querySelector<HTMLElement>("[data-card-status]")!;
+
+    function layoutGallery() {
+      const width = grid.getBoundingClientRect().width;
+      if (width <= 16) return;
+      const rows = justifiedRows(
+        photos.map((photo, position) => {
+          const source = photo[variants[position]].thumbnail;
+          return source.width / source.height;
+        }),
+        width,
+      );
+      rows.forEach((row, rowIndex) => {
+        row.widths.forEach((cardWidth, offset) => {
+          const position = row.start + offset;
+          cards[position].style.width = `${cardWidth}px`;
+          cards[position].dataset.row = String(rowIndex);
+          cardImage(position).style.height = `${row.height}px`;
+          cardImage(position).sizes = `${cardWidth}px`;
+        });
+      });
+      grid.dataset.justified = "";
+    }
+
+    layoutGallery();
+    let observedWidth = grid.getBoundingClientRect().width;
+    new ResizeObserver(([entry]) => {
+      if (Math.abs(entry.contentRect.width - observedWidth) < 0.1) return;
+      observedWidth = entry.contentRect.width;
+      layoutGallery();
+    }).observe(grid);
 
     function applyImage(
       image: HTMLImageElement,
@@ -170,9 +189,8 @@ const thumbnailSizes =
 
     function viewerSizes(source: GalleryImage["viewer"]) {
       const width = Math.min(
-        window.innerWidth * 0.94 - 40,
-        (Math.max(120, window.innerHeight * 0.94 - 230) * source.width) /
-          source.height,
+        viewerFrame.clientWidth,
+        (viewerFrame.clientHeight * source.width) / source.height,
       );
       return `${Math.max(1, Math.ceil(width))}px`;
     }
@@ -188,19 +206,20 @@ const thumbnailSizes =
       const photo = photos[position];
       const image = cardImage(position);
       variants[position] = variant;
+      layoutGallery();
       applyImage(image, photo[variant].thumbnail);
       image.alt = `${photo.alt} (${label(variant)})`;
       card(position).querySelector<HTMLAnchorElement>("[data-open]")!.href =
         photo[variant].original;
-      const button = cardToggle(position);
-      button.setAttribute("aria-pressed", String(variant === "bw"));
       cardStatus(position).textContent = "";
     }
 
     async function loadCard(position: number, variant: PhotoVariant) {
       if (busyCards.has(position)) return;
       busyCards.add(position);
-      const button = cardToggle(position);
+      const button = card(position).querySelector<HTMLButtonElement>(
+        "[data-thumbnail-retry]",
+      )!;
       button.setAttribute("aria-disabled", "true");
       cardStatus(position).textContent = `Loading ${label(variant)}…`;
       try {
@@ -216,7 +235,7 @@ const thumbnailSizes =
           error,
         );
         cardStatus(position).textContent =
-          "Could not load this version. Select the switch to retry.";
+          "Could not load this thumbnail. Select Retry thumbnail.";
       } finally {
         busyCards.delete(position);
         button.removeAttribute("aria-disabled");
@@ -248,6 +267,10 @@ const thumbnailSizes =
       pendingVariant = variant;
       const photo = photos[position];
       const source = photo[variant];
+      viewerTitle.textContent = `Photo ${position + 1} of ${photos.length} · ${label(variant)}`;
+      // caption.textContent = photo.caption ?? photo.alt;
+      original.href = source.original;
+      original.hidden = false;
       status.textContent = `Loading photo ${position + 1} (${label(variant)})…`;
       setBusy(true);
       retry.hidden = true;
@@ -266,7 +289,7 @@ const thumbnailSizes =
         viewerImage.hidden = false;
         displayed = { index: position, variant };
         viewerTitle.textContent = `Photo ${position + 1} of ${photos.length} · ${label(variant)}`;
-        caption.textContent = photo.caption ?? "";
+        // caption.textContent = photo.caption ?? photo.alt;
         original.href = source.original;
         original.hidden = false;
         toggle.setAttribute("aria-pressed", String(variant === "bw"));
@@ -285,15 +308,6 @@ const thumbnailSizes =
       }
     }
 
-    root
-      .querySelectorAll<HTMLButtonElement>("[data-toggle]")
-      .forEach((button) => {
-        button.hidden = false;
-        button.addEventListener("click", () => {
-          const position = Number(button.dataset.toggle);
-          void loadCard(position, other(variants[position]));
-        });
-      });
     root
       .querySelectorAll<HTMLButtonElement>("[data-thumbnail-retry]")
       .forEach((button) => {
@@ -362,6 +376,27 @@ const thumbnailSizes =
       () => void show(index, other(variants[index])),
     );
     retry.addEventListener("click", () => void show(index, pendingVariant));
+    let backdropPointerDown = false;
+    function isOutsideDialog(event: MouseEvent) {
+      const bounds = dialog.getBoundingClientRect();
+      return (
+        event.target === dialog &&
+        (event.clientX < bounds.left ||
+          event.clientX > bounds.right ||
+          event.clientY < bounds.top ||
+          event.clientY > bounds.bottom)
+      );
+    }
+    dialog.addEventListener("pointerdown", (event) => {
+      backdropPointerDown = event.button === 0 && isOutsideDialog(event);
+    });
+    dialog.addEventListener("pointercancel", () => {
+      backdropPointerDown = false;
+    });
+    dialog.addEventListener("click", (event) => {
+      if (backdropPointerDown && isOutsideDialog(event)) dialog.close();
+      backdropPointerDown = false;
+    });
     dialog.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
         event.preventDefault();
@@ -375,15 +410,17 @@ const thumbnailSizes =
       }
     });
     dialog.addEventListener("close", () => {
+      backdropPointerDown = false;
       request++;
       document.documentElement.style.overflow = previousOverflow;
       opener?.focus({ preventScroll: true });
     });
     window.addEventListener("resize", () => {
-      if (dialog.open && displayed) {
-        viewerImage.sizes = viewerSizes(
-          photos[displayed.index][displayed.variant].viewer,
-        );
+      if (dialog.open) {
+        const source = displayed
+          ? photos[displayed.index][displayed.variant].viewer
+          : photos[index][pendingVariant].viewer;
+        viewerImage.sizes = viewerSizes(source);
       }
     });
   }
@@ -395,8 +432,8 @@ const thumbnailSizes =
 
 <style>
   .photo-gallery {
-    margin-inline: calc(50% - min(550px, 50vw - 24px));
-    width: min(1100px, calc(100vw - 48px));
+    margin-inline: calc(50% - min(640px, 50vw - 24px));
+    width: min(1280px, calc(100vw - 48px));
   }
   .photo-gallery h2 {
     font-size: 1.5rem;
@@ -407,30 +444,34 @@ const thumbnailSizes =
     margin-block: 0.75rem;
   }
   .photo-grid {
-    column-count: 1;
-    column-gap: 1rem;
+    align-items: start;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .photo-grid[data-justified] {
+    display: flex;
+    flex-wrap: wrap;
   }
   figure {
-    break-inside: avoid;
-    margin: 0 0 1rem;
+    margin: 0;
+    min-width: 0;
+  }
+  .photo-grid[data-justified] figure {
+    flex: 0 0 auto;
   }
   figure img {
+    background: #e5e7eb;
     display: block;
     height: auto;
+    object-fit: contain;
     width: 100%;
   }
   figure a {
     display: block;
   }
-  .card-controls {
-    align-items: center;
-    display: flex;
-    gap: 0.5rem;
-    justify-content: space-between;
-    padding-block: 0.5rem;
-  }
   button,
-  footer a {
+  .viewer-actions a {
     border: 1px solid currentColor;
     border-radius: 0.4rem;
     cursor: pointer;
@@ -453,13 +494,10 @@ const thumbnailSizes =
     outline: 3px solid #3b82f6;
     outline-offset: 3px;
   }
-  figcaption,
-  .card-controls,
   .card-status {
     font-size: 0.875rem;
   }
-  .card-status:empty,
-  .viewer-caption:empty {
+  .card-status:empty {
     display: none;
   }
   dialog {
@@ -467,59 +505,103 @@ const thumbnailSizes =
     border: 1px solid #888;
     border-radius: 0.75rem;
     color: #111;
+    height: 94dvh;
     margin: auto;
-    max-height: 94dvh;
-    max-width: 94vw;
+    max-height: none;
+    max-width: none;
+    overflow: hidden;
     padding: 1rem;
-    width: 1200px;
+    width: min(1200px, 94vw);
   }
   dialog::backdrop {
     background: rgb(0 0 0 / 85%);
   }
   .viewer {
-    display: flex;
-    flex-direction: column;
-    max-height: calc(94dvh - 2rem);
+    display: grid;
+    gap: 0.5rem;
+    grid-template-rows: auto minmax(0, 1fr) 2.5em 3em auto;
+    height: 100%;
+    min-height: 0;
   }
-  header,
-  footer {
+  header {
+    align-items: center;
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .viewer-caption-row {
     align-items: center;
     display: flex;
-    flex-shrink: 0;
-    flex-wrap: wrap;
     gap: 0.5rem;
     justify-content: space-between;
+    min-width: 0;
   }
   header h2 {
     font-size: 1rem !important;
     margin: 0 !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .viewer-navigation {
+    display: flex;
+    flex-shrink: 0;
+    gap: 0.5rem;
+  }
+  .viewer-navigation button {
+    padding-inline: 0.5rem;
+    width: 5.25rem;
+  }
+  .viewer-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    justify-content: end;
+  }
+  footer {
+    display: grid;
+    justify-content: center;
+  }
+  footer [hidden],
+  .viewer-actions [hidden] {
+    display: block !important;
+    visibility: hidden;
   }
   .viewer-image {
     align-items: center;
+    background: #e5e7eb;
     display: flex;
     justify-content: center;
-    margin-block: 1rem;
     min-height: 0;
+    min-width: 0;
+    overflow: hidden;
   }
   .viewer-image img {
-    height: auto;
-    max-height: calc(94dvh - 230px);
+    height: 100%;
     max-width: 100%;
     object-fit: contain;
-    width: auto;
+    width: 100%;
   }
   .viewer-status {
     font-size: 0.875rem;
-    min-height: 1.5em;
+    margin: 0 !important;
+    overflow: auto;
   }
   .viewer-caption {
     font-size: 0.875rem;
-    max-height: 3em;
+    margin: 0 !important;
+    max-height: 100%;
+    min-width: 0;
     overflow: auto;
   }
   :global(.dark) dialog {
     background: #171717;
     color: #eee;
+  }
+  :global(.dark) figure img,
+  :global(.dark) .viewer-image {
+    background: #262626;
   }
   :global(.dark) button[aria-pressed="true"] {
     background: #eee;
@@ -530,12 +612,19 @@ const thumbnailSizes =
   }
   @media (min-width: 700px) {
     .photo-grid {
-      column-count: 2;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 699px) {
+    .viewer-actions a,
+    .viewer-actions button {
+      font-size: 0.75rem;
+      padding: 0.4rem 0.5rem;
     }
   }
   @media (min-width: 1100px) {
     .photo-grid {
-      column-count: 3;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 </style>

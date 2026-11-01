@@ -100,10 +100,12 @@ test("initial HTML contains only lazy colour thumbnails and native original link
     assert.ok(markup.includes(photos[index].colour.thumbnail.src));
     assert.ok(markup.includes(`href="${photos[index].colour.original}"`));
     assert.ok(!markup.includes(photos[index].bw.thumbnail.src));
-    assert.match(markup, /data-toggle[^>]*hidden/);
+    assert.doesNotMatch(markup, /data-toggle|card-controls|<figcaption/);
+    assert.match(markup, /data-thumbnail-retry[^>]*hidden/);
   }
   assert.match(html, /<dialog /);
   assert.match(html, /data-viewer-toggle/);
+  assert.match(html, /data-viewer-caption/);
   assert.match(html, /<noscript>/);
 });
 
